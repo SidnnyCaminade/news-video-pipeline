@@ -1,0 +1,9 @@
+node_modules/
+out/
+work/*/
+!work/.gitkeep
+remotion/public/job/
+.DS_Store
+*.log
+assets/sample/*.wav
+assets/sample/*.mp4

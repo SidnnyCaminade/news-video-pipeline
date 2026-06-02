@@ -1,0 +1,23 @@
+{
+  "name": "news-video-pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "description": "格安リップシンク・ニュース動画パイプライン (LTX2.3 + Fishaudio + Whisper + Remotion)",
+  "scripts": {
+    "build": "echo 'use: bun cli.ts'",
+    "studio": "remotion studio remotion/index.ts",
+    "render": "remotion render remotion/index.ts NewsVideo out/preview.mp4"
+  },
+  "dependencies": {
+    "@remotion/bundler": "^4.0.471",
+    "@remotion/cli": "^4.0.471",
+    "@remotion/renderer": "^4.0.471",
+    "react": "19",
+    "react-dom": "19",
+    "remotion": "^4.0.471",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/react": "19"
+  }
+}
