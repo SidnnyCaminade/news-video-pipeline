@@ -74,7 +74,8 @@ LTX-2.3 でリップシンク動画を生成し `outbox/<jobId>/` に出力 → 
   - [x] rclone-Drive バス (`src/bridge/drive.ts`)
   - [x] Colab→Mac 連携ステップ (`src/steps/colab.ts`)、`cli.ts --remote`
   - [x] Colab ワーカーノートブック (`colab/colab_worker.ipynb`)
-  - [ ] **要実機検証**: fish-speech の CLI 引数、LTX Lipdub ワークフローのノード差し替え、HF repo id
+  - [x] GGUF / VRAM自動対応（T4/L4/A100）— LTX-2.3 はフル42GBでA100-40GBでも溢れるためGGUF前提
+  - [ ] **要実機検証**: fish-speech の CLI 引数、Lipdub ワークフローのGGUFローダ差し替え＋API書き出し
 - [ ] **Phase 2**: テロップ内容を台本テキスト基準にする（Whisper は時刻整合のみ）、複数ジョブ並列、字幕スタイルのプリセット
 
 ## 既知の改善ポイント

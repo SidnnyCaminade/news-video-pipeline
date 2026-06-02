@@ -44,9 +44,22 @@ remote 名を変えたい場合は環境変数 `RCLONE_REMOTE`（既定 `gdrive:
 
 ## 3. Colab 側: ワーカー起動
 
-1. `colab/colab_worker.ipynb` を Colab で開く（GitHub に push 済みなら GitHub から開ける）
-2. ランタイム → タイプを変更 → **A100**（22B は 32GB+ VRAM 推奨。T4 しか無い場合は GGUF 量子化版に差替）
-3. 上から全セル実行。最後の `worker_loop()` が `inbox/` の監視に入る（**実行しっぱなしにする**）
+> **GPU について**: LTX-2.3 は 22B でフル(bf16)は 42GB あり、A100-40GB でも溢れる。
+> ノートブックは **GGUF 量子化**を使い、VRAM に応じて自動選択する
+> （T4 16GB→Q3_K_M / L4 24GB→Q5_K_M / A100 40GB+→Q8_0）。
+> 無料 T4 でも一応動くが重い。投稿の「18円/分」相当を狙うなら
+> **Pay As You Go で 100 ユニット(¥1,179)購入 → A100/L4** が本来の構成。
+
+1. `colab/colab_worker.ipynb` を Colab で開く（public リポジトリなので下のリンクでワンクリック）
+   `https://colab.research.google.com/github/SidnnyCaminade/news-video-pipeline/blob/main/colab/colab_worker.ipynb`
+2. ランタイム → タイプを変更 → **A100**（無ければ L4 / T4 でも GGUF が自動で量子化を落とす）
+3. セル 1〜5 を実行（Drive マウント・ノード導入・GGUF モデルDL・fish-speech）
+4. **セル 6（初回だけ手動）**: ComfyUI の公開 URL が出る → GUI で LTX-2.3 Lipdub ワークフローを開き、
+   GGUF ローダ（`Unet Loader (GGUF)`）に差し替え、画像+音声で 1 度生成して口が動くのを確認 →
+   **Save (API Format)** で `news-video-pipeline/lipdub_api.json` として Drive に保存
+5. セル 7〜8 を実行。`worker_loop()` が `inbox/` の監視に入る（**実行しっぱなしにする**）
+
+> 手順4でワークフローを 1 度 API 形式で保存しておくと、以降はワーカーがそれを使い回して全自動になる。
 
 ## 4. 顔画像とテロップ素材
 
